@@ -122,11 +122,10 @@ void MotorMgr::handleRotate(bool cw){
 	if (xLastTime != 0){
 		uint32_t ms = now - xLastTime;
 		float rpm = 60000.0 / (float)ms;
-		rpm = rpm / 90.0;
+		rpm = rpm / (float)xNumTicks);
 		xActRPM = rpm;
 		xMvAvgRPM = (rpm * 1.0 + xMvAvgRPM * 3.0)/ 4.0;
-		//xActRPM = (rpm * 1.0 + xActRPM * 3.0)/4;
-		//printf("In RPM = %f out RPM %f\n",rpm, rpm/(float)xNumTicks);
+
 	}
 	xLastTime = now;
 }
