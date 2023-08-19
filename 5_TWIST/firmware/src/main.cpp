@@ -18,7 +18,7 @@
 #include "uRosBridge.h"
 
 #include "MotorsAgent.h"
-
+#include "DDD.h"
 
 extern"C"{
 #include "pico/stdio/driver.h"
@@ -129,28 +129,21 @@ void mainTask(void *params){
 	motors.configAllPID(KP, KI, KD);
 	motors.start("Motors", TASK_PRIORITY);
 
+	//DDD
+	DDD ddd;
+	ddd.setMotorsAgent(&motors);
+	ddd.start("DDD", TASK_PRIORITY);
+
 
 	//Start up a uROS Bridge
 	uRosBridge *bridge = uRosBridge::getInstance();
 
-	bridge->setuRosEntities(&motors);
+	bridge->setuRosEntities(&ddd);
 	bridge->setLed(CONN_LED_PAD);
 	bridge->start("Bridge",  TASK_PRIORITY+2);
 
-	bool cw = false;
-	float rpm = 20.0;
-	float rps = 1.0;
+
 	for(;;){
-		printf("Set Speed %f dir %d\n", rps, cw);
-
-		motors.setSpeedRadPS(0, rps, cw);
-		motors.setSpeedRadPS(1, rps, !cw);
-		rps += 1.0;
-		if (rps > 6){
-			rps = 1.0;
-		}
-
-		cw = ! cw;
 		vTaskDelay(10000);
 
 	}
