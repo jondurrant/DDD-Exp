@@ -122,7 +122,7 @@ void MotorMgr::handleRotate(bool cw){
 	if (xLastTime != 0){
 		uint32_t ms = now - xLastTime;
 		float rpm = 60000.0 / (float)ms;
-		rpm = rpm / (float)xNumTicks);
+		rpm = rpm / (float)xNumTicks;
 		xActRPM = rpm;
 		xMvAvgRPM = (rpm * 1.0 + xMvAvgRPM * 3.0)/ 4.0;
 
