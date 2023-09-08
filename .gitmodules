@@ -8,3 +8,6 @@
 [submodule "lib/eigen"]
 	path = lib/eigen
 	url = https://gitlab.com/libeigen/eigen
+[submodule "lib/pico-distance-sensor"]
+	path = lib/pico-distance-sensor
+	url = https://github.com/dangarbri/pico-distance-sensor

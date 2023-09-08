@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<robot name="DDD">
+
+  <material name="blue">
+    <color rgba="0 0 0.8 1"/>
+  </material>
+
+  <material name="red">
+    <color rgba="0.8 0 0 1"/>
+  </material>
+
+  <link name="wheel_right">
+    <visual>
+      <geometry>
+        <cylinder length="0.055" radius="0.065"/>
+      </geometry>
+      <material name="blue"/>
+      <origin rpy="0 ${pi/2} 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+ 
+
+  <link name="wheel_left">
+    <visual>
+      <geometry>
+        <cylinder length="0.055" radius="0.065"/>
+      </geometry>
+      <material name="blue"/>
+      <origin rpy="0 ${pi/2} 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+ 
+  <link name="wheel_center">
+    <visual>
+      <geometry>
+        <cylinder length="0.055" radius="0.065"/>
+      </geometry>
+      <material name="blue"/>
+      <origin rpy="0 ${pi/2} 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+ 
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.001" radius="0.001"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+  </link>
+
+  <link name="chassis">
+    <visual>
+      <geometry>
+        <box size="0.060 0.200 0.003"/>
+      </geometry>
+      <material name="red"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+ 
+  <link name="motor_chassis">
+    <visual>
+      <geometry>
+        <box size="0.120 0.065 0.003"/>
+      </geometry>
+      <material name="red"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+  
+  <link name="lidar">
+    <visual>
+        <geometry>
+            <cylinder radius="0.05" length="0.04"/>
+        </geometry>
+        <material name="red"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+  
+  <link name="range_front">
+    <visual>
+      <geometry>
+        <box size="0.018 0.045 0.025"/>
+      </geometry>
+      <material name="red"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+  
+  <link name="range_back">
+    <visual>
+      <geometry>
+        <box size="0.018 0.045 0.025"/>
+      </geometry>
+      <material name="red"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+  
+  <link name="base_footprint"/>
+
+  <joint name="base_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_footprint"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+  </joint>
+  
+  
+  <joint name="base_to_chassis" type="fixed">
+    <parent link="base_link"/>
+    <child link="chassis"/>
+    <origin rpy="0 0 ${pi/2}" xyz="0 0 0.125"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+  
+  <joint name="chassis_to_motor_chassis" type="fixed">
+    <parent link="chassis"/>
+    <child link="motor_chassis"/>
+    <origin xyz="0 -0.120 -0.020"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+  
+  <joint name="chassis_to_centre" type="fixed">
+    <parent link="chassis"/>
+    <child link="wheel_center"/>
+    <origin xyz="0 0.100 ${-0.060-0.020}"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+  
+  <joint name="motor_0" type="continuous">
+    <parent link="motor_chassis"/>
+    <child link="wheel_left"/>
+    <origin xyz="${0.204/-2} 0.00 -0.060"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+  
+  <joint name="motor_1" type="continuous">
+    <parent link="motor_chassis"/>
+    <child link="wheel_right"/>
+    <origin xyz="${0.204/2} 0.00 -0.060" rpy="0 0 ${pi}"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+  
+  <joint name="chassis_to_lidar" type="fixed">
+    <parent link="chassis"/>
+    <child link="lidar"/>
+    <origin xyz="0.00 -0.065 0.09" rpy="0 0 ${pi/2}"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+  
+  <joint name="motor_chassis_to_range_front" type="fixed">
+    <parent link="motor_chassis"/>
+    <child link="range_front"/>
+    <origin xyz="0.000 -0.030 -0.020" rpy="0 0 ${pi/-2}"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+  
+  <joint name="hassis_to_range_back" type="fixed">
+    <parent link="chassis"/>
+    <child link="range_back"/>
+    <origin xyz="0.000 0.090 0.040" rpy="0 0 ${pi/2}"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+  
+  
+</robot>
